@@ -19,4 +19,9 @@ class SignUpController extends GetxController {
   @override
   void onClose() {
   }
+
+
+  saveData(){
+
+  }
 }

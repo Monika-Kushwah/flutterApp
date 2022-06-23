@@ -10,7 +10,7 @@ class SplashScreenPage extends GetView<SplashScreenController> {
         init: SplashScreenController(),
         builder: (_) => Scaffold(
           body: Center(
-            child: Image.asset('assets/mobile.gif'),
+            child: Image.asset('assets/SplaseScreen.gif'),
           ),
         )
     );

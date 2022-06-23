@@ -9,18 +9,22 @@ class SignUpView extends GetView<SignUpController>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-        appBar: AppBar(title: const Text('')),
+        appBar: AppBar(title: const Text('Create new Account!',style: TextStyle(
+        color: Colors.black54,
+          fontWeight: FontWeight.bold,
+          fontSize: 30.0,
+          fontStyle: FontStyle.italic,))),
         body:SingleChildScrollView(
             child :
             Column(
                 children: [
-                  const SizedBox(height: 30,),
-                  const Center(child: Text('Create new Account!',style: TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30.0,
-                    fontStyle: FontStyle.italic,),)
-                  ),
+                  // const SizedBox(height: 30,),
+                  // const Center(child: Text('Create new Account!',style: TextStyle(
+                  //   color: Colors.black54,
+                  //   fontWeight: FontWeight.bold,
+                  //   fontSize: 30.0,
+                  //   fontStyle: FontStyle.italic,),)
+                  // ),
                   Center(
                     child: Container(
                         alignment: Alignment.topLeft,
@@ -130,20 +134,22 @@ class SignUpView extends GetView<SignUpController>{
                           ),
                               // borderRadius: BorderRadius.all(Radius.circular(20.0))
                               onPressed: () async {
-                                bool connection = await checkConnectivity();
-                                if (connection == true) {
-                                  final isValid = controller.formKey.currentState.validate();
-                                  if (!isValid) {
-                                    return;
-                                  }
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return  AlertDialog( content: Text('UnableToConnectServerText'.tr),
-                                        );
-                                      });
-                                }
+
+                                  controller.saveData();
+                                // bool connection = await checkConnectivity();
+                                // if (connection == true) {
+                                //   final isValid = controller.formKey.currentState.validate();
+                                //   if (!isValid) {
+                                //     return;
+                                //   }
+                                // } else {
+                                //   showDialog(
+                                //       context: context,
+                                //       builder: (context) {
+                                //         return  AlertDialog( content: Text('UnableToConnectServerText'.tr),
+                                //         );
+                                //       });
+                                // }
 
 
                               }, child: const Text('Sign Up',)),
@@ -166,7 +172,7 @@ class SignUpView extends GetView<SignUpController>{
                                   ),
                                 ),
                                 onTap: () {
-                                  Get.toNamed(RouteConstant.home);
+                                  Get.toNamed(RouteConstant.login);
                                 },
                               ),
                             ),

@@ -16,7 +16,7 @@ class SplashScreenController extends GetxController {
 
   @override
   void onReady() {
-    Timer(const Duration(seconds: 8), () =>  Get.offAllNamed(RouteConstant.home));
+    Timer(const Duration(seconds:5), () =>  Get.offAllNamed(RouteConstant.login));
     super.onReady();
   }
 
