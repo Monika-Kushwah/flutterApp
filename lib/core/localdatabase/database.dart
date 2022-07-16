@@ -19,7 +19,7 @@ class DbHelper {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, 'ubiattendance.db');
     var db = await openDatabase(path,
-        version: 1, onCreate: _onCreate, onUpgrade: _onUpgrage);
+        version: 3, onCreate: _onCreate, onUpgrade: _onUpgrage);
     return db;
   }
 
@@ -36,8 +36,6 @@ class DbHelper {
 
   void _onUpgrage(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < newVersion) {
-
-
       await db.execute(
           "CREATE TABLE sign_up (Id INTEGER PRIMARY KEY,"
               'Name TEXT,'

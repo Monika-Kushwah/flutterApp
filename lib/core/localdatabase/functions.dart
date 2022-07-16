@@ -1,45 +1,100 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutterapp_monika/core/constant/route_constant.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
 import 'database.dart';
 
 class LocalDbfunction {
 
 
-  int id;
-  var Name;
-  var Phone;
-  var Email;
-  var Password;
+  int Id;
+  var name;
+  var phone;
+  var email;
+  var password;
 
-  LocalDbfunction({this.id, this.Name, this.Phone, this.Email,this.Password});
+  LocalDbfunction({this.Id, this.name, this.phone, this.email,this.password});
 
-LocalDbfunction.empty();
+ LocalDbfunction.empty();
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      'id': id,
-      'Name': Name,
-      'Phone': Phone,
-      'Email': Email,
-      'Password': Password,
+      'Id': Id,
+      'Name': name,
+      'Phone': phone,
+      'Email': email,
+      'Password': password,
     };
     return map;
   }
 
   LocalDbfunction.fromMap(Map<String, dynamic>map){
-      id=map['id'];
-      Name=map['Name'];
-      Phone=map['Phone'];
-      Email=map['Email'];
-      Password=map['Password'];
+      Id=map['Id'];
+      name=map['Name'];
+      phone=map['Phone'];
+      email=map['Email'];
+      password=map['Password'];
   }
 
   Future<LocalDbfunction> saveSignUp() async {
-    DbHelper dbHelper=new DbHelper();
+    DbHelper dbHelper= DbHelper();
     var dbClient = await dbHelper.db;
-    this.id= await dbClient.insert('sign_up', this.toMap());
-    print(this.id);
+    this.Id= await dbClient.insert('sign_up', this.toMap());
+    //print(this.Id);
     return this;
   }
 
+
+  Future<List<LocalDbfunction>> getLocalSaveData() async{
+
+    DbHelper dbHelper= DbHelper();
+    var dbClient = await dbHelper.db;
+    List<Map> maps= await dbClient.query('sign_up',columns: [
+      'Id',
+      'Name',
+      'Phone',
+      'Email',
+      'Password',
+    ]);
+    print(maps);
+    List<LocalDbfunction> spl=[];
+    if(maps.length > 0){
+      print("Map s");
+      for (int i=0;i<maps.length;i++){
+
+        print(maps[i]);
+        spl.add(LocalDbfunction.fromMap(maps[i]));
+      }
+    }
+    return spl;
+  }
+
+  Future<List<LocalDbfunction>>loginSave(email,password) async {
+    DbHelper dbHelper=new DbHelper();
+    var dbClient = await dbHelper.db;
+
+    List<Map> maps = await dbClient.rawQuery("SELECT *  FROM `sign_up` WHERE `Email`=? AND `Password`=?",
+        [email.toString(), password.toString()]);
+    List<LocalDbfunction> ams=[];
+    print(maps);
+    if(maps.length>0){
+      for (int i=0;i<maps.length;i++){
+        ams.add(LocalDbfunction.fromMap(maps[i]));
+      }
+    }
+
+    if(maps.length ==1 )
+      {
+        Get.offAllNamed(RouteConstant.home);
+      }else{
+      print("Password Incorect");
+    }
+    debugPrint(maps.toString());
+    print("selected Attendance");
+    return ams;
+
+  }
 
 
 

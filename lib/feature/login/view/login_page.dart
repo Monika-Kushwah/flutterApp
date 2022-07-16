@@ -1,13 +1,15 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:flutterapp_monika/core/constant/route_constant.dart';
 import 'package:flutterapp_monika/core/constant/validator.dart';
 import 'package:get/get.dart';
 import '../controller/login_controller.dart';
 
 
-class HomePage extends GetView<HomeController>{
-  const HomePage({Key key}) : super(key: key);
+class LoginPage extends GetView<LoginController>{
+  const LoginPage({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -54,7 +56,7 @@ class HomePage extends GetView<HomeController>{
                                 validator: (value) {
                                   return Validator.ValidateEmail(value);
                                 },
-                                //controller: controller.emailController,
+                                controller: controller.emailController,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon:  Icon(Icons.mail,color: Colors.black54,),
@@ -69,7 +71,7 @@ class HomePage extends GetView<HomeController>{
                                 validator: (value) {
                                   return Validator.ValidateEmail(value);
                                 },
-                               // controller:controller.passwordController,
+                                controller:controller.passwordController,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon:  Icon(Icons.lock, color: Colors.black54,),
@@ -91,14 +93,15 @@ class HomePage extends GetView<HomeController>{
                   RaisedButton(
                     color: Colors.black54,
                     disabledColor: Colors.black54,
-                    onPressed: (){},
+                    onPressed: (){
+                      controller.login();
+                    },
                       child: const Text('Login',style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
                         fontStyle: FontStyle.italic,
                       ),)
-
                   ),
 
                   /*ElevatedButton(style:
@@ -135,16 +138,41 @@ class HomePage extends GetView<HomeController>{
                       ),)
                   ),*/
                 ),
-          /*      const SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 SizedBox(width: 200.0,
                     height: 50.0,
                     child: SignInButton(
                       Buttons.Google,
-                      text: "Sign up with Google",
-                      onPressed: () {
+                      text: "Sign In with Google",
+                      onPressed: () async {
+                        var connectivityResult =
+                        await (Connectivity().checkConnectivity());
+                        var isConnected = await controller.checkConnectionToServer();
+                        if (connectivityResult ==
+                            ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+                          if (isConnected == 1) {
+                            //controller.googleLogin(context);
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const AlertDialog(
+                                    content:  Text('Unable to connect the server.'),
+                                  );
+                                });
+                          }
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text('No Internet connection!'),
+                                );
+                              });
+                        }
                       },
                     )
-                ),*/
+                ),
                 const SizedBox(height: 30,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

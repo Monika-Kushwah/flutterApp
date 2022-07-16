@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp_monika/core/constant/route_constant.dart';
 import 'package:flutterapp_monika/feature/SignUp/controller/signup_controller.dart';
@@ -14,7 +15,7 @@ class SignUpView extends GetView<SignUpController>{
           fontWeight: FontWeight.bold,
           fontSize: 30.0,
           fontStyle: FontStyle.italic,))),
-        body:SingleChildScrollView(
+        body: SingleChildScrollView(
             child :
             Column(
                 children: [
@@ -51,7 +52,7 @@ class SignUpView extends GetView<SignUpController>{
                                   }
                                   return null;
                                 },
-                               // controller:controller.nameController,
+                                controller:controller.nameController,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon:  Icon(Icons.person_add,color: Colors.black54,),
@@ -70,15 +71,14 @@ class SignUpView extends GetView<SignUpController>{
                                   }
                                   return null;
                                 },
-                               // controller: controller.EmailController,
+                                controller: controller.emailController,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon:  Icon(Icons.mail,color: Colors.black54,),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                                   labelText: 'Email',))),
-                        Container
-                          (
+                        Container(
                             padding: const EdgeInsets.all(10),
                             child:  TextFormField(
                                 validator: (value) {
@@ -87,7 +87,7 @@ class SignUpView extends GetView<SignUpController>{
                                   }
                                   return null;
                                 },
-                               // controller: controller.phoneController,
+                                controller: controller.phoneController,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon:  Icon(Icons.phone_android,color: Colors.black54,),
@@ -107,7 +107,7 @@ class SignUpView extends GetView<SignUpController>{
                                   }
                                   return null;
                                 },
-                                //controller: controller.passwordController,
+                                controller: controller.passwordController,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon:  Icon(Icons.lock,color: Colors.black54,),
@@ -122,38 +122,21 @@ class SignUpView extends GetView<SignUpController>{
                                   ),
                                   labelText: 'Your Password',))),
 
-                        const SizedBox(height: 15,),
-                        SizedBox(width: 200.0,
-                          height: 50.0,
-                          child: ElevatedButton(style:
-                          ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              )
-                          )
-                          ),
-                              // borderRadius: BorderRadius.all(Radius.circular(20.0))
-                              onPressed: () async {
+                          ])),
 
-                                  controller.saveData();
-                                // bool connection = await checkConnectivity();
-                                // if (connection == true) {
-                                //   final isValid = controller.formKey.currentState.validate();
-                                //   if (!isValid) {
-                                //     return;
-                                //   }
-                                // } else {
-                                //   showDialog(
-                                //       context: context,
-                                //       builder: (context) {
-                                //         return  AlertDialog( content: Text('UnableToConnectServerText'.tr),
-                                //         );
-                                //       });
-                                // }
+                  RaisedButton(
+                      elevation: 5,
+                      color: Colors.green,
+                      child: Text('Raised Button'),
+                  onPressed: () {
+                        print("Click On Raise Button");
+                        //controller.getAll();
+                        controller.saveData();
+                  }
+              ),
+    // borderRadius: BorderRadius.all(Radius.circular(20.0))
 
 
-                              }, child: const Text('Sign Up',)),
-                        ),
                         const SizedBox(height: 20,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -181,9 +164,6 @@ class SignUpView extends GetView<SignUpController>{
                       ],
                     ),
                   ),
-                ]
-            )
-        )
     );
   }
 }
